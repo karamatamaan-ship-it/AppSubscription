@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <title>My Subscriptions</title>
+</head>
+<body>
+<h1>My Subscription Tracker</h1>
+<h2>TOTAL COST: $<span th:text="${totalCost}">0.00</span></h2>
+<form action="/add" method="post">
+    <input type="text" name="name" placeholder="Service Name" required>
+    <input type="number" step="0.01" name="price" placeholder="Price" required>
+    <button type="submit">Add Subscription</button>
+</form>
+
+<br>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Service Name</th>
+        <th>Monthly Cost</th>
+        <th>Action</th> </tr>
+    </thead>
+    <tbody>
+    <tr th:each="sub, iterStat : ${subscriptions}">
+        <td th:text="${sub.name}"></td>
+        <td th:text="${sub.price}"></td>
+        <td>
+            <form action="/remove" method="post" style="display:inline;">
+                <input type="hidden" name="index" th:value="${iterStat.index}">
+                <button type="submit" style="color: red;">Remove</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+</body>
+</html>
